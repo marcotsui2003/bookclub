@@ -4,7 +4,6 @@ ReaderBook.delete_all
 Book.delete_all
 BookCategory.delete_all
 Category.delete_all
-Review.delete_all
 
 
 
@@ -54,11 +53,6 @@ s.books<<[Book.find_by(title: "E"), Book.find_by(title: "G")]
 s.save
 h.books<<[Book.find_by(title: "D"), Book.find_by(title: "F"),Book.find_by(title: "G")]
 h.save
-
-r1= Review.create(rating: 4,reader: Reader.find_by(username: "A"), book: Book.find_by(title: "D"), content:"Excellent!")
-r2= Review.create(rating: 1,reader: Reader.find_by(username: "A"), book: Book.find_by(title: "E"), content:"Boring...")
-r3= Review.create(rating: 2,reader: Reader.find_by(username: "B"), book: Book.find_by(title: "F"), content:"Ordinary.")
-r4= Review.create(rating: 3,reader: Reader.find_by(username: "C"), book: Book.find_by(title: "F"), content:"So-so.")
 
 
 

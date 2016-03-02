@@ -1,0 +1,11 @@
+<%if @error%>
+	<h3><%=@error%></h3>
+<%end%>
+
+<h1>Please login with your username and password:</h1>
+
+<form method='post' action="/login">
+<p>Username:<input type="text" name="username"/></p>
+<p>Password:<input type="text" name="password"/></p>
+<input type="submit" value="Submit"/>
+</form>

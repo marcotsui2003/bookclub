@@ -6,4 +6,12 @@ class Book < ActiveRecord::Base
 	has_many :book_categories
 	has_many :categories, through: :book_categories
 
+	has_many :reviews
+
+	def self.valid_params?(params)
+    return !params[:title].empty?
+  end
+
+  
+
 end

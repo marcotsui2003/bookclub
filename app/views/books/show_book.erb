@@ -1,0 +1,27 @@
+
+<h1><%=@book.title%></h1>
+
+Reviews:
+<% @book.reviews.each do |review|%>
+	<%= review.content%><br>
+	Rating: <%=review.rating%><br>
+  	by <%=review.reader.username%><br><br>
+<%end%>
+
+<% if @reader.books.exists?(@book)%>
+	<a href="/books/<%=@book.id%>/edit">Add or review this book</a>
+	<br>
+	<br>
+	<form method="post" action="/books/<%=@book.id%>/delete">
+    <input id="hidden" type ="hidden" name="_method" value="delete">
+    <input type="submit" value="Delete"/>
+</form><br>
+<% else%>
+	<a href="/books/<%=@book.id%>/edit">Add this book to your reading list</a>
+	<br>
+<%end%>
+
+<a href="/books">Return to the book list</a><br>
+<a href="/logout">Log Out</a>
+
+

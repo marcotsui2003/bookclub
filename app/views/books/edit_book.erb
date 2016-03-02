@@ -1,0 +1,19 @@
+<h1>Edit Book "<%=@book.title%>":</h1>
+
+<form method="post" action="/books/<%=@book.id%>">
+	Review:<textarea name="content">
+        <%=@review ? @review.content : ""%>
+    </textarea><br>
+  Rating:<input type="text" name="rating" value=<%=@review ? @review.rating : ""%>>
+  <input type="submit" value="Submit"/>
+</form>
+
+
+<form method="post" action="/books/<%=@book.id%>/delete">
+    <input id="hidden" type ="hidden" name="_method" value="delete">
+    <input type="submit" value="Delete"/>
+</form><br>
+
+
+<a href="/books">Return to the book list</a><br>
+<a href="/logout">Log Out</a>

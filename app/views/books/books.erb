@@ -1,0 +1,26 @@
+<h1>Welcome, <%=@reader.username%>!</h1>
+
+<%if @error%>
+	<h3><%=@error%></h3>
+<%end%>
+
+<h2>My reading list:</h2>
+
+<% @reader_books.each do |book| %>
+	<a href="/books/<%=book.id%>"><%= book.title %></a><br>
+
+<%end%>
+
+<h2>Other Books people are reading: </h2>
+<% @other_books.each do |book| %>
+	<a href="/books/<%=book.id%>"><%= book.title %></a><br>
+<%end%>
+
+<a href="/books/new">Add new book to my reading list</a>
+
+<a href="/logout">Logout</a>
+
+
+
+
+
