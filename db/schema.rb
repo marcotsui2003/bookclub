@@ -23,7 +23,8 @@ ActiveRecord::Schema.define(version: 20160229232947) do
   end
 
   create_table "categories", force: :cascade do |t|
-    t.string "name"
+    t.string  "name"
+    t.integer "reader_id"
   end
 
   create_table "reader_books", force: :cascade do |t|

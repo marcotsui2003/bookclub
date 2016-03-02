@@ -33,14 +33,21 @@ class BooksController < ApplicationController
 		@reader= current_reader
 		
 		if @reader.books.exists?(title: params[:title])
-			redirect '/books?error=This book is already in your reading list.'
+			redirect '/books?error=This book is already in your reading list.'#should redirect to the book edit page
 		end
+
 		
 		@book =Book.create(title: params[:title])
+		if !params[:category].empty?
+			params[:category].split(",").each do |c|
+		  	@book.categories.create(name: c, reader_id: @reader.id)
+		  end
+	  end
 		@reader.books << @book
 		if !params[:review].empty?
 			@review = Review.create(reader: @reader, book: @book, content: params[:review],rating: params[:rating].to_i)
 		end
+
 		redirect "/books/#{@book.id}"
 	end
 
@@ -48,7 +55,7 @@ class BooksController < ApplicationController
 		redirect_if_not_logged_in
     @reader =current_reader
 		@book= Book.find(params[:id])
-		binding.pry
+		@categories= @book.categories_list.join(",")
 		erb :"/books/show_book"
 	end
 
@@ -56,6 +63,9 @@ class BooksController < ApplicationController
 		redirect_if_not_logged_in
 		@reader= current_reader
 		@book= Book.find(params[:id])
+
+		@reader_categories= @book.categories.where(reader_id: @reader.id).map{|c| c.name}.join(",")
+		@all_categories=@book.categories.map{|c| c.name}.join(",")
 		@review = Review.find_by(reader_id: @reader.id, book_id: @book.id)
 
 		erb :"/books/edit_book"
@@ -64,6 +74,12 @@ class BooksController < ApplicationController
 	post '/books/:id' do
 		@reader= current_reader
 		@book= Book.find(params[:id])
+		@categories = params[:category].split(",").compact if !params[:category].empty?
+		
+		@categories.each do |c|
+			@book.categories.find_or_create_by(name: c, reader_id: @reader.id)
+	  end	
+
 		if @reader.books.exists?(@book)
 			@review = Review.find_or_create_by(reader_id: @reader.id, book_id: @book.id)
 	    @review.update(content: params[:content], rating: params[:rating].to_i)
@@ -74,7 +90,7 @@ class BooksController < ApplicationController
     end
 
     redirect "/books/#{@book.id}"
-		end
+	end
 
 
 	
@@ -97,4 +113,3 @@ class BooksController < ApplicationController
 	end	
 
 end
-	

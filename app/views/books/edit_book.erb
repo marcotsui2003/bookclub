@@ -4,6 +4,8 @@
 	Review:<textarea name="content">
         <%=@review ? @review.content : ""%>
     </textarea><br>
+  Categories by all readers: <%=@all_categories%>
+  Categories by you: <input type="text" name="category" value=<%=@reader_categories%>>
   Rating:<input type="text" name="rating" value=<%=@review ? @review.rating : ""%>>
   <input type="submit" value="Submit"/>
 </form>

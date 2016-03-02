@@ -4,7 +4,7 @@ class Book < ActiveRecord::Base
 	has_many :readers, through: :reader_books
 
 	has_many :book_categories
-	has_many :categories, through: :book_categories
+	has_many :categories, -> { distinct }, through: :book_categories
 
 	has_many :reviews
 
@@ -12,6 +12,8 @@ class Book < ActiveRecord::Base
     return !params[:title].empty?
   end
 
-  
+  def categories_list
+  	self.categories.map {|category| category.name}
+  end
 
 end
