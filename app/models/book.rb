@@ -8,6 +8,10 @@ class Book < ActiveRecord::Base
 
 	has_many :reviews
 
+	validates :title, {presence: true, uniqueness: true}
+
+
+
 	def self.valid_params?(params)
     return !params[:title].empty?
   end
@@ -17,3 +21,9 @@ class Book < ActiveRecord::Base
   end
 
 end
+
+=begin
+	create_table "books", force: :cascade do |t|
+		t.string "title"
+	end
+=end

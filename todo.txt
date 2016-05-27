@@ -1,0 +1,4 @@
+26 May
+1. get the validation and sinatra-flash working
+2. get the before filter for checking logged_in
+3. modify helper current_reader, use it

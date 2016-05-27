@@ -1,0 +1,24 @@
+<h1>Add a New Book to Your Reading List:</h1>
+
+<% if flash[:notice] %>
+ <%= flash[:notice] %><br>
+<% end %>
+
+<% if flash[:errors] %>
+  <% flash[:errors].each do |message| %>
+	  <%= message %>.<br>
+	<% end %>
+<% end %>
+
+
+<form method="post" action="/books">
+	Title:<input type="text" name="title" value=<%=@title%>><br>
+	Categories(e.g.Category A, Category B,Category C):<input type="text" name="category"><br>
+	Review:<textarea name="review">
+  </textarea><br>
+  Rating:<input type="number" min="0" max="10" step="1" name="rating"/>
+	<input type="submit" value="submit"/>
+</form>
+
+<a href="/books">Back to My Reading List</a>
+<a href="/logout">Log Out</a>

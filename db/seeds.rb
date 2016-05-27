@@ -11,11 +11,11 @@ Review.delete_all
 
 readers =[
 					{username: "A",
-						password: "xxx"},
+						password: "xxx123456"},
 					{username: "B",
-						password:"yyy"},
+						password:"yyy123456"},
 						{username: "C",
-							password: "zzz"}
+							password: "zzz123456"}
 					]
 
 readers.each do |reader|
@@ -59,7 +59,3 @@ r1= Review.create(rating: 4,reader: Reader.find_by(username: "A"), book: Book.fi
 r2= Review.create(rating: 1,reader: Reader.find_by(username: "A"), book: Book.find_by(title: "E"), content:"Boring...")
 r3= Review.create(rating: 2,reader: Reader.find_by(username: "B"), book: Book.find_by(title: "F"), content:"Ordinary.")
 r4= Review.create(rating: 3,reader: Reader.find_by(username: "C"), book: Book.find_by(title: "F"), content:"So-so.")
-
-
-
-

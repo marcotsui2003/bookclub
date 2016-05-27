@@ -1,5 +1,15 @@
 <h1>Edit Book "<%=@book.title%>":</h1>
 
+<% if flash[:notice] %>
+ <%= flash[:notice] %><br>
+<% end %>
+
+<% if flash[:errors] %>
+  <% flash[:errors].each do |message| %>
+	  <%= message %>.<br>
+	<% end %>
+<% end %>
+
 <form method="post" action="/books/<%=@book.id%>">
 	Review:<textarea name="content">
         <%=@review ? @review.content : ""%>

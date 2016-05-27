@@ -2,10 +2,11 @@ require './config/environment'
 
 class ApplicationController < Sinatra::Base
 
+  register Sinatra::Flash
   configure do
     set :public_folder, 'public'
     set :views, 'app/views'
-    enable :sessions 
+    enable :sessions
     set :session_secret, 'super crazy secret'
   end
 
@@ -17,18 +18,19 @@ class ApplicationController < Sinatra::Base
     end
 
     def logged_in?
-      !!session[:id]
+      !!current_reader
     end
 
     def current_reader
-      Reader.find(session[:id])
+      @current_reader ||= Reader.find_by(id: session[:id])
+      #@test = 3 totally screwed things up
     end
 
   end
 
-  get '/' do 
+  get '/' do
   	erb :index
 	end
 
-	
+
 end

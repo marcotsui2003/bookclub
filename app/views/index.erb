@@ -1,4 +1,12 @@
 <h1>Welcome to Flatiron Book Club</h1>
 
+<%= flash[:notice] if flash[:notice] %><br>
+
+<% if flash[:errors] %>
+  <% flash[:errors].each do |message| %>
+	  <%= message %>. <br>
+	<% end %>
+<% end %>
+
 <a href="/signup">Sign Up</a>
 <a href="/login">Log In</a>

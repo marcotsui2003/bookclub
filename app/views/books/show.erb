@@ -1,5 +1,17 @@
 
 <h1><%=@book.title%></h1>
+
+
+<% if flash[:notice] %>
+ <%= flash[:notice] %><br>
+<% end %>
+
+<% if flash[:errors] %>
+  <% flash[:errors].each do |message| %>
+	  <%= message %>
+	<% end %>
+<% end %>
+
 Categories:<%=@categories%>.
 
 Reviews:
@@ -24,5 +36,3 @@ Reviews:
 
 <a href="/books">Return to the book list</a><br>
 <a href="/logout">Log Out</a>
-
-

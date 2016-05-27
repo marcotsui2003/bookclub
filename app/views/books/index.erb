@@ -1,8 +1,15 @@
 <h1>Welcome, <%=@reader.username%>!</h1>
 
-<%if @error%>
-	<h3><%=@error%></h3>
-<%end%>
+<% if flash[:notice] %>
+ <%= flash[:notice] %><br>
+<% end %>
+
+<% if flash[:errors] %>
+  <% flash[:errors].each do |message| %>
+	  <%= message %>. <br>
+	<% end %>
+<% end %>
+
 
 <h2>My reading list:</h2>
 
@@ -19,8 +26,3 @@
 <a href="/books/new">Add new book to my reading list</a>
 
 <a href="/logout">Logout</a>
-
-
-
-
-
