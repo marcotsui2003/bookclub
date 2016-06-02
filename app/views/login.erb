@@ -1,17 +1,24 @@
-<h1>Please login with your username and password:</h1>
 
 <% if flash[:notice] %>
  <%= flash[:notice] %><br>
 <% end %>
 
+
 <% if flash[:errors] %>
-  <% flash[:errors].each do |message| %>
-	  <%= message %>
-	<% end %>
+  <div class="alert alert-danger" role="alert">
+    <% flash[:errors].each do |message| %>
+  	  <%= message %>. <br>
+  	<% end %>
+  </div>
 <% end %>
 
-<form method='post' action="/login">
-<p>Username: <input type="text" name="username"/></p>
-<p>Password: <input type="password" name="password"/></p>
-<input type="submit" value="Submit"/>
+
+
+<form method='post' action="/login" class="form-signin">
+  <h2 class="form-signin-heading">Please login in</h2>
+  <label for="username" class="sr-only">Username</label>
+  <input type="text" id="username" name="username" class="form-control" placeholder="Username"  autofocus=true>
+  <label for="password" class="sr-only">Password</label>
+  <input type="password" id="password" name="password" class="form-control" placeholder="Password" >
+  <button class="btn btn-lg btn-default btn-block" type="submit">Log in</button>
 </form>

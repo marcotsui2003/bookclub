@@ -10,22 +10,44 @@
 	<% end %>
 <% end %>
 
-<form method="post" action="/books/<%=@book.id%>">
-	Review:<textarea name="content">
-        <%=@review ? @review.content : ""%>
-    </textarea><br>
-  Categories by all readers: <%=@all_categories%>
-  Categories by you: <input type="text" name="category" value=<%=@reader_categories%>>
-  Rating:<input type="text" name="rating" value=<%=@review ? @review.rating : ""%>>
-  <input type="submit" value="Submit"/>
-</form>
+<div class="row">
+  <form method="post" action="/books/<%=@book.id%>" class="edit-form col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-4 form" >
+    <input id="hidden" type="hidden" name="_method" value="patch" />
+    <div class="form-group">
+      <label for="review" class="left-label" ><p class="text-left">Review:</p></label>
+      <textarea id='review' name="content" class="form-control" rows="10"><%=@review ? @review.content : ""%></textarea>
+    </div>
 
 
-<form method="post" action="/books/<%=@book.id%>/delete">
-    <input id="hidden" type ="hidden" name="_method" value="delete">
-    <input type="submit" value="Delete"/>
-</form><br>
+    <div class="form-group">
+      <label for="other-category" class="left-label"> Categories by all readers: </label>
+      <input id="other-category" class="form-control" value= "<%=@all_categories%>" disabled>
+    </div>
+
+    <div class="form-group">
+      <label for="all-reader" class="left-label">Categories by you:</label>
+      <input class="form-control" id= "all-reader" type="text" name="category" value=<%=@reader_categories%>>
+    </div>
+
+    <div class="form-group" >
+      <label for="own-category" class="left-label">Rating:</label>
+
+          <input id= "own-category" class="form-control" type="number" min="0" max="10" step="1" name="rating"  value=<%=@review ? @review.rating : ""%>>
+        </div>
+
+          <input type="submit" class="btn btn-lg btn-primary" value="Submit"/>
+
+      </div>
 
 
-<a href="/books">Return to the book list</a><br>
-<a href="/logout">Log Out</a>
+
+  <br>
+  <br>
+  <br>
+
+  <div class= 'registration'>
+    <p class="lead">
+      <a href="/books" class="btn btn-lg btn-default">Back to reading list</a>
+      <a href="/logout" class="btn btn-lg btn-default">Log out</a>
+    </p>
+  </div>

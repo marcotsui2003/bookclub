@@ -1,6 +1,11 @@
 class BooksController < ApplicationController
-	get '/books' do
+
+	before do
 		redirect_if_not_logged_in
+	end
+
+	get '/books' do
+		#redirect_if_not_logged_in
 		@reader= Reader.find_by(session[:id])
 		@reader_books =@reader.books
 		@other_books = @reader.books_read_by_others
@@ -8,7 +13,7 @@ class BooksController < ApplicationController
 	end
 
 	get '/books/new' do
-		redirect_if_not_logged_in
+		#redirect_if_not_logged_in
 		if !params[:title].nil?
 			@title= params[:title]
 		else
@@ -19,16 +24,30 @@ class BooksController < ApplicationController
 
 	post '/books' do
 		@reader= current_reader
-    if existing_book = Book.find_by(title: params[:title])
+		book = Book.new(title: params[:title])
+		if book.invalid?
+			flash[:errors] = book.errors.full_messages
+			redirect '/books/new'
+		elsif
+      existing_book = Book.find_by(title: params[:title])
 			if @reader.books.exists?(existing_book)
 				flash[:notice] = "This book is already in your reading list"
 			else
 				flash[:notice] = "This book is being read by others"
 			end
 			redirect "/books/#{existing_book.id}/edit"
-		end
+		else
 
-
+=begin
+if existing_book = Book.find_by(title: params[:title])
+	if @reader.books.exists?(existing_book)
+		flash[:notice] = "This book is already in your reading list"
+	else
+		flash[:notice] = "This book is being read by others"
+	end
+	redirect "/books/#{existing_book.id}/edit"
+end
+=end
 
 =begin
 
@@ -46,29 +65,31 @@ class BooksController < ApplicationController
 		end
 =end
 
-		@book = Book.create(title: params[:title])
-		if !params[:category].blank?
-			params[:category].split(",").each do |c|
-		  	@book.categories.create(name: c, reader_id: @reader.id)
+			@book = Book.create(title: params[:title])
+			if !params[:category].blank?
+				params[:category].split(",").each do |c|
+			  	@book.categories.create(name: c, reader_id: @reader.id)
+			  end
 		  end
-	  end
-		@reader.books << @book
-		if !params[:review].blank?
-			@review = Review.create(reader: @reader, book: @book, content: params[:review],rating: params[:rating].to_i)
+			@reader.books << @book
+			if !params[:review].blank?
+				@review = Review.create(reader: @reader, book: @book, content: params[:review],rating: params[:rating].to_i)
+			end
+			redirect "/books/#{@book.id}"
 		end
-		redirect "/books/#{@book.id}"
 	end
 
+
 	get '/books/:id' do
-		redirect_if_not_logged_in
+		#redirect_if_not_logged_in
     @reader =current_reader
 		@book= Book.find(params[:id])
-		@categories= @book.categories_list.join(",")
+		@categories= @book.categories_list
 		erb :"/books/show"
 	end
 
 	get '/books/:id/edit' do
-		redirect_if_not_logged_in
+		#redirect_if_not_logged_in
 		@reader= current_reader
 		@book= Book.find(params[:id])
 
@@ -79,7 +100,7 @@ class BooksController < ApplicationController
 		erb :"/books/edit"
 	end
 
-	post '/books/:id' do
+	patch '/books/:id' do
 		@reader= current_reader
 		@book= Book.find(params[:id])
 
@@ -93,11 +114,11 @@ class BooksController < ApplicationController
 
 		if @reader.books.exists?(@book)
 			@review = Review.find_or_create_by(reader_id: @reader.id, book_id: @book.id)
-	    @review.update(content: params[:content], rating: params[:rating].to_i)
+	    @review.update(content: params[:content], rating: params[:rating])
     else
     	@reader.books << @book
     	@review = Review.create(reader_id: @reader.id, book_id: @book.id)
-	    @review.update(content: params[:content], rating: params[:rating].to_i)
+	    @review.update(content: params[:content], rating: params[:rating])
     end
 
     redirect "/books/#{@book.id}"

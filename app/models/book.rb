@@ -20,6 +20,8 @@ class Book < ActiveRecord::Base
   	self.categories.map {|category| category.name}
   end
 
+		
+
 end
 
 =begin

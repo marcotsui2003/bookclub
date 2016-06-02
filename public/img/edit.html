@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<!-- saved from url=(0035)http://localhost:9393/books/33/edit -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="./edit_files/bootstrap.min.css">
+    <link rel="stylesheet" href="./edit_files/cover.css"> <!-- static files are served from the public folder, set to /public -->
+  </head>
+  <body>
+    <h1>My Book Club</h1>
+    <h1>Edit Book "D":</h1>
+
+
+
+<div class="form-wrapper">
+<form method="post" action="http://localhost:9393/books/33" class=" edit-form">
+  <div class="form-group">
+    <label for="review" class="col-lg-2">Review:</label>
+    <textarea id="review" name="content" class="form-control">          Good! 
+    
+    </textarea>
+  </div>
+
+  <div class="form-group">
+  <label for="other-category" class="col-lg-2 control-label"> Categories by all readers: </label>
+  <div id="other-category">
+    <p class="form-control-static">romance,history,Sci-fi</p>
+  </div>
+  </div>
+  Categories by you: <input type="text" name="category" value="Sci-fi">
+  Rating:<input type="text" name="rating" value="8">
+  <input type="submit" value="Submit">
+</form>
+</div>
+
+<form method="post" action="http://localhost:9393/books/33" class="form-signin">
+  <h2 class="form-signin-heading">Please edit book</h2>
+  <label for="review" class="sr-only">Review</label>
+  <textarea id="review" name="content" class="form-control">  </textarea>
+  <label for="password" class="sr-only">Password</label>
+  <input type="password" id="password" name="password" class="form-control" placeholder="Password">
+  <button class="btn btn-lg btn-default btn-block" type="submit">Log in</button>
+</form>
+
+
+<form method="post" action="http://localhost:9393/books/33/delete">
+    <input id="hidden" type="hidden" name="_method" value="delete">
+    <input type="submit" value="Delete">
+</form><br>
+
+
+<a href="http://localhost:9393/books">Return to the book list</a><br>
+<a href="http://localhost:9393/logout">Log Out</a>
+
+  
+
+
+</body></html>

@@ -44,7 +44,7 @@ class ReadersController < ApplicationController
 			flash[:notice] = "You have successfully logged in."
 			redirect '/books'
 		else
-			flash[:errors] = @reader.errors.full_messages
+			flash[:errors] = ["Username and password do not match."]
 			redirect '/login'
 		end
 	end
@@ -53,7 +53,6 @@ class ReadersController < ApplicationController
 		if !session[:id].nil?
 			session.clear
 			flash[:notice]= "You have successfully logged out."
-			binding.pry
 			redirect '/'
 		else
 			redirect '/'

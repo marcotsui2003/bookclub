@@ -11,18 +11,75 @@
 <% end %>
 
 
-<h2>My reading list:</h2>
+<h2>Reading lists:</h2>
+<div class="table-wrapper">
+  <table class="table table-hover table-striped lead">
+    <h3>Books you are reading:</h3>
+    <caption> Your Reading List</caption>
+    <thead>
+      <tr>
+        <td>#</td>
+        <td>Title</td>
+        <td class="text-right">                # of readers</td>
+      </tr>
+    </thead>
+    <tbody>
+    <% if @reader_books.blank?  %>
+       <tr>
+         <td class="text-center">
+           There are currently no books on your list.
+         </td>
+       </tr>
+    <% else %>
+      <% @reader_books.each.with_index(1) do |book, i| %>
+        <tr>
+      	<td> <%= i %>  </td>
+        <td><a href="/books/<%=book.id%>"><%= -book.title %></a></td>
+        <td class="text-right"><span class="label label-default label-as-badge"><%= book.readers.count %></span></td>
+        </tr>
+      <%end%>
+    <% end %>
+    </tbody>
+  </table>
+</div>
 
-<% @reader_books.each do |book| %>
-	<a href="/books/<%=book.id%>"><%= book.title %></a><br>
+<div class="table-wrapper">
+  <table class="table table-hover table-striped lead">
+    <h3>Books others are reading:</h3>
+    <caption> Others' Reading List</caption>
+    <thead>
+      <tr>
+        <td>#</td>
+        <td>Title</td>
+        <td class="text-right">                # of readers</td>
+      </tr>
+    </thead>
+    <tbody>
+    <% if @reader_books.blank?  %>
+       <tr>
+         <td class="text-center">
+           There are currently no books on the list.
+         </td>
+       </tr>
+    <% else %>
+      <% @other_books.each.with_index(1) do |book, i| %>
+        <tr>
+      	<td> <%= i %>  </td>
+        <td><a href="/books/<%=book.id%>"><%= -book.title %></a></td>
+        <td class="text-right"><span class="label label-default label-as-badge"><%= book.readers.count %></span></td>
+        </tr>
+      <%end%>
+    <% end %>
+    </tbody>
+  </table>
+</div>
 
-<%end%>
 
-<h2>Other Books people are reading: </h2>
-<% @other_books.each do |book| %>
-	<a href="/books/<%=book.id%>"><%= book.title %></a><br>
-<%end%>
 
-<a href="/books/new">Add new book to my reading list</a>
 
-<a href="/logout">Logout</a>
+
+
+
+<a href="/books/new" class="btn btn-lg btn-default">Add book</a>
+
+<a href="/logout" class="btn btn-lg btn-default">Logout</a>

@@ -11,28 +11,48 @@
 	  <%= message %>
 	<% end %>
 <% end %>
+<div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-4">
+<div class="row">
 
-Categories:<%=@categories%>.
+<h4>Categories:</h4>
+<% @categories.each do |category|%>
+  <span id="cat" class="label label-warning  label-lg"><i><%= category %></i></span>
+<% end %>
+</div>
 
-Reviews:
+<div class="row">
+<h3>Reviews:</h3>
+<p><%= "There is no review for this book" if !@book.reviews.exists? %></p>
 <% @book.reviews.each do |review|%>
-	<%= review.content%><br>
-	Rating: <%=review.rating%><br>
-  	by <%=review.reader.username%><br><br>
-<%end%>
+  <div class="panel panel-warning panel-lg">
+    <div class="panel-heading"><%= reviewer_name review.reader.username %></div>
+    <div class="panel-body">
+      <div class="well">
+        <q><%= review.content ||= "No review available from this reader" %></q>
+      </div>
 
-<% if @reader.books.exists?(@book)%>
-	<a href="/books/<%=@book.id%>/edit">Add or review this book</a>
-	<br>
-	<br>
-	<form method="post" action="/books/<%=@book.id%>/delete">
-    <input id="hidden" type ="hidden" name="_method" value="delete">
-    <input type="submit" value="Delete"/>
-</form><br>
-<% else%>
-	<a href="/books/<%=@book.id%>/edit">Add this book to your reading list</a>
-	<br>
-<%end%>
+        <span class="label label-warning label-lg rating-label">Rating: <span class="badge"><%= review_helper review.rating %></span></label>
 
-<a href="/books">Return to the book list</a><br>
-<a href="/logout">Log Out</a>
+  </div>
+
+
+</div>
+<% end %>
+
+<div class= 'registration'>
+  <p class="lead">
+    <% if @reader.books.exists?(@book)%>
+    	<a href="/books/<%=@book.id%>/edit" class="btn btn-lg btn-default">Review this book</a>
+      <form id ="delete-form" method="post" action="/books/<%=@book.id%>/delete">
+        <input id="hidden" type ="hidden" name="_method" value="delete">
+        <input class="btn btn-lg btn-default"type="submit" value="Delete this book"/>
+      </form>
+      <br>
+    <% else %>
+      <a href="/books/<%=@book.id%>/edit" class="btn btn-lg btn-default">Add this book to your reading list</a>
+    <% end %>
+    <br>
+    <a href="/books" class="btn btn-lg btn-default">Return to the book list</a>
+    <a href="/logout" class="btn btn-lg btn-default">Log out</a>
+  </p>
+</div>

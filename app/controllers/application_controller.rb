@@ -26,6 +26,16 @@ class ApplicationController < Sinatra::Base
       #@test = 3 totally screwed things up
     end
 
+    def review_helper(rating)
+      rating.blank? ? "No rating was given." : rating
+    end
+
+    def reviewer_name(name)
+      name == current_reader.username ? "You" : name
+    end
+
+
+
   end
 
   get '/' do
