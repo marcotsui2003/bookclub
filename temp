@@ -1,0 +1,49 @@
+@reader= current_reader
+@book= Book.find(params[:id])
+if !params[:category].blank?
+  @categories = params[:category].split(",").compact
+  @categories.each do |c|
+    @book.categories.find_or_create_by(name: c, reader_id: @reader.id)
+  end
+end
+if @reader.books.exists?(@book)
+  @review = Review.find_or_create_by(reader_id: @reader.id, book_id: @book.id)
+  @review.update(content: params[:content], rating: params[:rating])
+else
+  @reader.books << @book
+  @review = Review.create(reader_id: @reader.id, book_id: @book.id)
+  @review.update(content: params[:content], rating: params[:rating])
+end
+flash[:notice]= "Book successfully edited."
+redirect "/books/#{@book.id}"
+end
+
+
+post '/books' do
+  @reader= current_reader
+  book = Book.new(title: params[:title])
+  if book.invalid?
+    flash[:errors] = book.errors.full_messages
+    redirect '/books/new'
+  elsif
+    existing_book = Book.find_by(title: params[:title])
+    if @reader.books.exists?(existing_book)
+      flash[:notice] = "This book is already in your reading list"
+    else
+      flash[:notice] = "This book is being read by others"
+    end
+    redirect "/books/#{existing_book.id}/edit"
+  else
+    @book = Book.create(title: params[:title])
+    if !params[:category].blank?
+      params[:category].split(",").each do |c|
+        @book.categories.create(name: c, reader_id: @reader.id)
+      end
+    end
+    @reader.books << @book
+    if !params[:review].blank?
+      @review = Review.create(reader: @reader, book: @book, content: params[:review],rating: params[:rating].to_i)
+    end
+    redirect "/books/#{@book.id}"
+  end
+end

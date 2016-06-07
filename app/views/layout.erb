@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,19 +9,21 @@
     <link rel="stylesheet" href="/css/bootstrap.min.css" >
     <link rel="stylesheet" href="/css/cover.css" > <!-- static files are served from the public folder, set to /public -->
   </head>
+
   <body>
+    <!-- fixed header with Web App title and current user info -->
     <div class="header-bar">
       <h1 class="bookclub"><a href="/"> My Book Club</a></h1>
-
       <% if logged_in? %>
         <h4 class="current-reader">You are currently logged in as <%= current_reader.username%></h4>
+      <% else %>
+        <h4 class="current-reader">You are not logged in.</h4>
       <% end %>
     </div>
 
-
     <%= yield %>
+
     <script type="text/javascript" src="/js/jquery-1.12.4.js"></script>
     <script type="text/javascript" src="/js/bootstrap.min.js"></script>
   </body>
-
 </html>

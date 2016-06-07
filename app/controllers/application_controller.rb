@@ -1,7 +1,6 @@
 require './config/environment'
 
 class ApplicationController < Sinatra::Base
-
   register Sinatra::Flash
   configure do
     set :public_folder, 'public'
@@ -41,15 +40,11 @@ class ApplicationController < Sinatra::Base
     def reviewer_name(name)
       name == current_reader.username ? "You" : name
     end
-
-
-
   end
 
   get '/' do
     redirect_if_logged_in
   	erb :index
 	end
-
-
+  
 end

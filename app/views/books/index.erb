@@ -1,98 +1,68 @@
 <div class="down">
-
-<% if flash[:notice] %>
-  <div class="alert alert-success alert-dismissible" role="alert">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-  <span aria-hidden="true">&times;</span>
-</button>
-    <%= flash[:notice] %><br>
-  </div>
-<% end %>
-
-
-<% if flash[:errors] %>
-  <div class="alert alert-danger alert-dismissible" role="alert">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-  <span aria-hidden="true">&times;</span>
-</button>
-    <% flash[:errors].each do |message| %>
-  	  <%= message %> <br>
-  	<% end %>
-  </div>
-<% end %>
-
-
-
-<div class="table-wrapper boundary">
-  <table class="table table-hover table-striped lead">
-    <h3>Books you are reading:</h3>
-    <caption> Your Reading List</caption>
-    <thead>
-      <tr>
-        <td>#</td>
-        <td>Title</td>
-        <td class="text-right"># of readers</td>
-      </tr>
-    </thead>
-    <tbody>
-    <% if @reader_books.blank?  %>
-       <tr>
-         <td class="text-center" colspan=3>
-           There are currently no books on your list.
-         </td>
-       </tr>
-    <% else %>
-      <% @reader_books.each.with_index(1) do |book, i| %>
+  <%= erb :flash %>
+  <div class="table-wrapper boundary">
+    <!-- books the current user is reading -->
+    <table class="table table-hover table-striped lead">
+      <h3>Books you are reading:</h3>
+      <caption> Your Reading List</caption>
+      <thead>
         <tr>
-      	<td> <%= i %>  </td>
-        <td><a href="/books/<%=book.id%>"><%= -book.title %></a></td>
-        <td class="text-right"><span class="label label-default label-as-badge"><%= book.readers.count %></span></td>
+          <td>#</td>
+          <td>Title</td>
+          <td class="text-right"># of readers</td>
         </tr>
-      <%end%>
-    <% end %>
-    </tbody>
-  </table>
-</div>
+      </thead>
+      <tbody>
+      <% if @reader_books.blank?  %>
+         <tr>
+           <td class="text-center" colspan=3>
+             There are currently no books on your list.
+           </td>
+         </tr>
+      <% else %>
+        <% @reader_books.each.with_index(1) do |book, i| %>
+          <tr>
+        	<td> <%= i %>  </td>
+          <td><a href="/books/<%=book.id%>"><%= -book.title %></a></td>
+          <td class="text-right"><span class="label label-default label-as-badge"><%= book.readers.count %></span></td>
+          </tr>
+        <%end%>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
 
-<div class="table-wrapper boundary">
-  <table class="table table-hover table-striped lead">
-    <h3>Books others are reading:</h3>
-    <caption> Others' Reading List</caption>
-    <thead>
-      <tr>
-        <td>#</td>
-        <td>Title</td>
-        <td class="text-right">                # of readers</td>
-      </tr>
-    </thead>
-    <tbody>
-    <% if @other_books.blank?  %>
-       <tr>
-         <td class="text-center">
-           There are currently no books on the list.
-         </td>
-       </tr>
-    <% else %>
-      <% @other_books.each.with_index(1) do |book, i| %>
+  <!-- books others are reading -->
+  <div class="table-wrapper boundary">
+    <table class="table table-hover table-striped lead">
+      <h3>Books others are reading:</h3>
+      <caption> Others' Reading List</caption>
+      <thead>
         <tr>
-      	<td> <%= i %>  </td>
-        <td><a href="/books/<%=book.id%>"><%= -book.title %></a></td>
-        <td class="text-right"><span class="label label-default label-as-badge"><%= book.readers.count %></span></td>
+          <td>#</td>
+          <td>Title</td>
+          <td class="text-right"># of readers</td>
         </tr>
-      <%end%>
-    <% end %>
-    </tbody>
-  </table>
-</div>
-
-
-
-
-
-
-
-<a href="/books/new" class="btn btn-lg btn-primary">Add book</a>
-
-<a href="/logout" class="btn btn-lg btn-primary">Logout</a>
-
+      </thead>
+      <tbody>
+      <% if @other_books.blank?  %>
+         <tr>
+           <td class="text-center" colspan =3>
+             There are currently no books on the list.
+           </td>
+         </tr>
+      <% else %>
+        <% @other_books.each.with_index(1) do |book, i| %>
+          <tr>
+            <td> <%= i %>  </td>
+            <td><a href="/books/<%=book.id%>"><%= -book.title %></a></td>
+            <td class="text-right"><span class="label label-default label-as-badge"><%= book.readers.count %></span></td>
+          </tr>
+        <%end%>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+  <a href="/books/new" class="btn btn-lg btn-primary">Add book</a>
+  <a href="/logout" class="btn btn-lg btn-primary">Logout</a>
 </div>

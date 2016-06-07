@@ -1,5 +1,6 @@
 class Book < ActiveRecord::Base
 
+
 	has_many :reader_books
 	has_many :readers, through: :reader_books
 
@@ -20,7 +21,7 @@ class Book < ActiveRecord::Base
   	self.categories.map {|category| category.name}
   end
 
-		
+
 
 end
 

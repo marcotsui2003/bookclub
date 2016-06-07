@@ -71,7 +71,7 @@ j.books << Book.find_by(title: "War and Peace")
 k.books << Book.find_by(title: "History of World War II")
 
 
-r1= Review.create(rating: 4,reader: a, book: Book.find_by(title: "The Well-Grounded Rubyist"), content:"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.")
-r2= Review.create(rating: 1,reader: a, book: Book.find_by(title: "The Rails 4 Way"), content:"Great!")
-r3= Review.create(rating: 2,reader: b, book: Book.find_by(title: "War and Peace"), content:"Master Piece")
-r4= Review.create(rating: 3,reader: c, book: Book.find_by(title: "History of World War II"), content:"So-so.")
+r1= Review.create(rating: 4,reader: a, book: Book.find_by(title: "War and Peace"), content:"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.")
+r2= Review.create(rating: 5,reader: a, book: Book.find_by(title: "History of World War II"), content:"Great!")
+r3= Review.create(rating: 9,reader: b, book: Book.find_by(title: "The Well-Grounded Rubyist"), content:"Master Piece")
+r4= Review.create(rating: 9,reader: c, book: Book.find_by(title: "The Rails 4 Way"), content:"Yeah!")
