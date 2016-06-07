@@ -6,7 +6,7 @@
 a,
 a:focus,
 a:hover {
-  color: #fff;
+  color: #191919;
 }
 
 /* Custom default button */
@@ -27,15 +27,60 @@ a:hover {
 html,
 body {
   height: 100%;
-  background-color: #3e3232;       /* #333; */
+  background-color: white;       /* #333; */
 }
 
 body {
-  color: #fff;
+  /*color: #fff;*/
   text-align: center;
-  text-shadow: 0 1px 3px rgba(0,0,0,.5);
+  /*text-shadow: 0 1px 3px rgba(0,0,0,.5);*/
+}
+/*use display: table and table-cell to do vertical align*/
+div.header-bar {
+  position: fixed;
+  width:100%;
+  background-color: rgba(25, 25, 25, 0.8);
+  top: 0px;
+  left: 0px;
+  height: 100px;
+  display: table !important;
+  z-index: 10;
+
+
+
 }
 
+ .header-bar .bookclub {
+  /*must be in a container?*/
+
+  display: table-cell;; /*wont inherit color if not block*/
+  color: white;
+  font-weight: bold;
+  width: 300px;
+
+  text-align: left;
+  vertical-align: middle;
+  padding-left: 20px;
+
+}
+.header-bar .current-reader {
+ /*must be in a container?*/
+
+ display: table-cell;; /*wont inherit color if not block*/
+ color: white;
+ width: 300px;
+
+ text-align: right;
+ vertical-align: bottom;;
+ padding-right: 20px;
+ padding-bottom: 20px;
+
+}
+
+.header-bar .bookclub a {
+  color:white;
+  text-decoration: none;
+}
 
 /* Extra markup and styles for table-esque vertical and horizontal centering */
 .site-wrapper {
@@ -43,8 +88,7 @@ body {
   width: 100%;
   height: 100%; /* For at least Firefox */
   min-height: 100%;
-  -webkit-box-shadow: inset 0 0 100px rgba(0,0,0,.5);
-          box-shadow: inset 0 0 100px rgba(0,0,0,.5);
+  border: 5px solid grey;
 }
 .site-wrapper-inner {
   display: table-cell;
@@ -112,13 +156,20 @@ body {
  */
 
 .cover {
-  padding: 0 20px;
+  padding: 6% 20px;
 }
 .cover .btn-lg {
   padding: 10px 20px;
   font-weight: bold;
 }
 
+/*
+#welcome {
+  width: 60%;
+  background-image: url('/img/child_and_books_208362.jpg');
+  background-size: cover;
+}
+*/
 
 /*
  * Footer
@@ -283,4 +334,24 @@ span#cat {
 
 form#delete-form {
   display: inline;
+}
+
+
+
+.boundary {
+
+  border: 3px solid #ccc;
+  border-radius: 2em;
+
+  padding:20px 30px;
+}
+
+form.boundary {
+  padding-bottom: 100px;
+}
+
+.down {
+
+  position: relative;
+  top: 125px;
 }

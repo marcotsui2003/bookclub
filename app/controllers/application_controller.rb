@@ -13,7 +13,15 @@ class ApplicationController < Sinatra::Base
   helpers do
     def redirect_if_not_logged_in
       if !logged_in?
-        redirect "/login?error=You have to be logged in to do that"
+        flash[:errors] ="You need to log in to perform this function."
+        redirect "/login"
+      end
+    end
+
+    def redirect_if_logged_in
+      if logged_in?
+        flash[:errors] = ["You have already logged in."]
+        redirect '/books'
       end
     end
 
@@ -39,6 +47,7 @@ class ApplicationController < Sinatra::Base
   end
 
   get '/' do
+    redirect_if_logged_in
   	erb :index
 	end
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160229232947) do
+ActiveRecord::Schema.define(version: 20160606192851) do
 
   create_table "book_categories", force: :cascade do |t|
     t.integer "book_id"
@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(version: 20160229232947) do
     t.string "username"
     t.string "email"
     t.string "password_digest"
+    t.string "password_confirmation"
   end
 
   create_table "reviews", force: :cascade do |t|

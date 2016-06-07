@@ -1,17 +1,33 @@
-<h1>Edit Book "<%=@book.title%>":</h1>
 
-<% if flash[:notice] %>
- <%= flash[:notice] %><br>
-<% end %>
 
-<% if flash[:errors] %>
-  <% flash[:errors].each do |message| %>
-	  <%= message %>.<br>
-	<% end %>
-<% end %>
+<div class= "down col-md-4 col-md-offset-4" >
+
+  <h1>Edit Book "<%=@book.title%>":</h1>
+
+  <% if flash[:notice] %>
+    <div class="alert alert-success alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+      <%= flash[:notice] %><br>
+    </div>
+  <% end %>
+
+
+  <% if flash[:errors] %>
+    <div class="alert alert-danger alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+      <% flash[:errors].each do |message| %>
+    	  <%= message %>. <br>
+    	<% end %>
+    </div>
+  <% end %>
+
 
 <div class="row">
-  <form method="post" action="/books/<%=@book.id%>" class="edit-form col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-4 form" >
+  <form method="post" action="/books/<%=@book.id%>" class="boundary edit-form  form" >
     <input id="hidden" type="hidden" name="_method" value="patch" />
     <div class="form-group">
       <label for="review" class="left-label" ><p class="text-left">Review:</p></label>
@@ -51,3 +67,4 @@
       <a href="/logout" class="btn btn-lg btn-default">Log out</a>
     </p>
   </div>
+</div>

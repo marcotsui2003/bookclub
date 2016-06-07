@@ -1,18 +1,29 @@
-<h1>Welcome, <%=@reader.username%>!</h1>
+<div class="down">
 
 <% if flash[:notice] %>
- <%= flash[:notice] %><br>
+  <div class="alert alert-success alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+  <span aria-hidden="true">&times;</span>
+</button>
+    <%= flash[:notice] %><br>
+  </div>
 <% end %>
+
 
 <% if flash[:errors] %>
-  <% flash[:errors].each do |message| %>
-	  <%= message %>. <br>
-	<% end %>
+  <div class="alert alert-danger alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+  <span aria-hidden="true">&times;</span>
+</button>
+    <% flash[:errors].each do |message| %>
+  	  <%= message %> <br>
+  	<% end %>
+  </div>
 <% end %>
 
 
-<h2>Reading lists:</h2>
-<div class="table-wrapper">
+
+<div class="table-wrapper boundary">
   <table class="table table-hover table-striped lead">
     <h3>Books you are reading:</h3>
     <caption> Your Reading List</caption>
@@ -20,13 +31,13 @@
       <tr>
         <td>#</td>
         <td>Title</td>
-        <td class="text-right">                # of readers</td>
+        <td class="text-right"># of readers</td>
       </tr>
     </thead>
     <tbody>
     <% if @reader_books.blank?  %>
        <tr>
-         <td class="text-center">
+         <td class="text-center" colspan=3>
            There are currently no books on your list.
          </td>
        </tr>
@@ -43,7 +54,7 @@
   </table>
 </div>
 
-<div class="table-wrapper">
+<div class="table-wrapper boundary">
   <table class="table table-hover table-striped lead">
     <h3>Books others are reading:</h3>
     <caption> Others' Reading List</caption>
@@ -55,7 +66,7 @@
       </tr>
     </thead>
     <tbody>
-    <% if @reader_books.blank?  %>
+    <% if @other_books.blank?  %>
        <tr>
          <td class="text-center">
            There are currently no books on the list.
@@ -80,6 +91,8 @@
 
 
 
-<a href="/books/new" class="btn btn-lg btn-default">Add book</a>
+<a href="/books/new" class="btn btn-lg btn-primary">Add book</a>
 
-<a href="/logout" class="btn btn-lg btn-default">Logout</a>
+<a href="/logout" class="btn btn-lg btn-primary">Logout</a>
+
+</div>

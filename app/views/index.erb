@@ -1,55 +1,44 @@
-<h1>Welcome to Flatiron Book Club</h1>
 
-<%= flash[:notice] if flash[:notice] %><br>
-
-<% if flash[:errors] %>
-  <div class="alert alert-danger" role="alert">
-    <% flash[:errors].each do |message| %>
-  	  <%= message %>. <br>
-  	<% end %>
+<div class="down">
+<% if flash[:notice] %>
+  <div class="alert alert-success alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+  <span aria-hidden="true">&times;</span>
+</button>
+    <%= flash[:notice] %><br>
   </div>
 <% end %>
 
-<div class="site-wrapper">
 
-  <div class="site-wrapper-inner">
+<% if flash[:errors] %>
+  <div class="alert alert-danger alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+  <span aria-hidden="true">&times;</span>
+</button>
+    <% flash[:errors].each do |message| %>
+      <%= message %>. <br>
+    <% end %>
+  </div>
+<% end %>
 
-    <div class="cover-container">
 
-      <div class="masthead clearfix">
-        <div class="inner">
-          <h3 class="masthead-brand">Cover</h3>
-        <!--    <nav>
-            <ul class="nav masthead-nav">
-              <li class="active"><a href="#">Home</a></li>
-              <li><a href="#">Features</a></li>
-              <li><a href="#">Contact</a></li>
-            </ul>
-          </nav>
-          -->
-        </div>
-      </div>
+
+
+
+
+<div id="welcome" class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-4 boundary">
+
 
       <div class="inner cover">
         <h1 class="cover-heading">Welcome to My Book Club!</h1>
         <p class="lead">Share your love for books with others.</p>
-        <img id="books" src="/img/books.jpg" alt="" />
+        <img id="books" src="/img/child_and_books_208362.jpg" alt="" />
         <div class= 'registration'>
           <p class="lead">
-            <a href="/signup" class="btn btn-lg btn-default">Sign Up</a>
-            <a href="/login" class="btn btn-lg btn-default">Log In</a>
+            <a href="/signup" class="btn btn-lg btn-primary">Sign Up</a>
+            <a href="/login" class="btn btn-lg btn-primary">Log In</a>
           </p>
         </div>
       </div>
-<!--
-      <div class="mastfoot">
-        <div class="inner">
-          <p>Cover template for <a href="http://getbootstrap.com">Bootstrap</a>, by <a href="https://twitter.com/mdo">@mdo</a>.</p>
-        </div>
-      </div>
--->
-    </div>
-
-  </div>
-
+</div>
 </div>

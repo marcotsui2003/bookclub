@@ -14,3 +14,12 @@ is OK, if the book is not in his list, then it will be automatically added to hi
 
 2. create controller action for books#create when the input title is empty
 DONE!
+
+2nd June
+1. tidy up the flash notice
+2. check the app again
+3. modify the CSS??
+
+
+3rd
+3. in edit form, should be able to go to see all the reviews (show action)

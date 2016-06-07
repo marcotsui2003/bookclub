@@ -6,11 +6,12 @@ class BooksController < ApplicationController
 
 	get '/books' do
 		#redirect_if_not_logged_in
-		@reader= Reader.find_by(session[:id])
+		@reader= Reader.find_by(id: session[:id])
 		@reader_books =@reader.books
 		@other_books = @reader.books_read_by_others
 		erb :"/books/index"
 	end
+
 
 	get '/books/new' do
 		#redirect_if_not_logged_in
@@ -120,7 +121,7 @@ end
     	@review = Review.create(reader_id: @reader.id, book_id: @book.id)
 	    @review.update(content: params[:content], rating: params[:rating])
     end
-
+    flash[:notice]= "Book successfully edited."
     redirect "/books/#{@book.id}"
 	end
 
