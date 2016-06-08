@@ -93,19 +93,21 @@ class BooksController < ApplicationController
 	get '/books/:id/edit' do
 		@reader= current_reader
 		@book= Book.find(params[:id])
-		@reader_categories= @book.categories.where(reader_id: @reader.id).map{|c| c.name}.join(",")
+		@review = Review.find_or_create_by(reader_id: @reader.id, book_id: @book.id)
+		@reader_categories= @review.categories.map{|c| c.name}.join(",")
 		@all_categories=@book.categories.map{|c| c.name}.join(",")
-		@review = Review.find_by(reader_id: @reader.id, book_id: @book.id)
+
 		erb :"/books/edit"
 	end
 
 	patch '/books/:id' do
 		@reader= current_reader
 		@book= Book.find(params[:id])
+		@review = Review.find_by(reader_id: @reader.id, book_id: @book.id)
 		if !params[:category].blank?
-		  @categories = params[:category].split(",").compact
-			@categories.each do |c|
-				@book.categories.find_or_create_by(name: c, reader_id: @reader.id)
+		  @categories = params[:category].split(",").compact.map(&:strip)
+			@review.category_ids = @categories.map do |c|
+				@review.categories.find_or_create_by(name: c).id
 		  end
     end
 		if @reader.books.exists?(@book)
@@ -124,17 +126,18 @@ class BooksController < ApplicationController
 		@reader =current_reader
 		@book= Book.find(params[:id])
 		@review = Review.find_by(reader_id: @reader.id, book_id: @book.id)
-    if !@reader.books.exists?(@book)
+    if !@review
 			flash[:errors] =["#{@book.title} is not on your reading list"]
 		  redirect '/books'
-		end
-		# can I condense the code below?
-		@review.delete if @review
-		@reader.books.delete(@book)
-		@reader.save
-		@book.save
-		@book.delete if @book.readers.blank?
-		redirect '/books'
+		else
+			# can I condense the code below?
+			@review.delete
+			#@reader.books.delete(@book)
+			@reader.save
+			#@book.save
+			@book.delete if @book.readers.blank?
+			redirect '/books'
+	  end
 	end
 
 end

@@ -27,7 +27,7 @@
 
 
 <div class="row">
-  <form method="post" action="/books/<%=@book.id%>" class="boundary edit-form  form" >
+  <form method="post" action="/books/<%=@book.id%>" class="boundary edit-form  form" ><%=  %>
     <input id="hidden" type="hidden" name="_method" value="patch" />
     <div class="form-group">
       <label for="review" class="left-label" ><p class="text-left">Review:</p></label>

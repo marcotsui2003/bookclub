@@ -1,13 +1,10 @@
 class Book < ActiveRecord::Base
 
 
-	has_many :reader_books
-	has_many :readers, through: :reader_books
-
-	has_many :book_categories
-	has_many :categories, -> { distinct }, through: :book_categories
-
 	has_many :reviews
+	has_many :readers, through: :reviews
+
+	has_many :categories, -> { distinct }, through: :reviews
 
 	validates :title, {presence: true, uniqueness: true}
 

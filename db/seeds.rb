@@ -1,8 +1,7 @@
 #clear the database first
 Reader.delete_all
-ReaderBook.delete_all
 Book.delete_all
-BookCategory.delete_all
+ReviewCategory.delete_all
 Category.delete_all
 Review.delete_all
 
@@ -28,50 +27,52 @@ readers.each do |reader|
 	Reader.create(reader)
 end
 
-books=["War and Peace","The Well-Grounded Rubyist","Effective JavaScript","The Rails 4 Way", "History of World War II"]
-books.each do |book|
-	Book.create(title: book)
-end
 
-categories= ['programming language', 'computer science', 'fiction', 'non-fiction', 'web development', 'literature', 'history' ]
-categories.each do |category|
-	Category.create(name: category)
-end
+
+e= Category.create(name: 'programming language')
+f= Category.create(name: 'computer science')
+g= Category.create(name: 'fiction')
+h= Category.create(name: 'non-fiction')
+i= Category.create(name: 'web development')
+j= Category.create(name: 'literature')
+k= Category.create(name: 'history')
+
+l= Book.create(title: 'War and Peace')
+m= Book.create(title: 'The Well-Grounded Rubyist')
+n= Book.create(title: 'Effective JavaScript')
+o= Book.create(title: 'The Rails 4 Way')
+p= Book.create(title: 'History of World War II')
+
+
 
 a = Reader.find_by(username: "Mary")
-a.books << [Book.find_by(title: "War and Peace"), Book.find_by(title: "History of World War II")]
-a.save
+a.books << [l, p]
+r_a1 = a.reviews.find_by(book_id: l.id)
+r_a2 = a.reviews.find_by(book_id: p.id)
+r_a1.content = "excellent"
+r_a1.categories <<  [g,j]
+r_a2.content = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+r_a2.categories << [j,k]
+r_a1.save
+r_a2.save
 
 b = Reader.find_by(username: "Peter")
-b.books << [Book.find_by(title: "The Well-Grounded Rubyist")]
-b.save
+b.books << m
+r_b1 = b.reviews.find_by(book_id: m.id)
+r_b1.content = "fantastic"
+r_b1.save
+
 
 c = Reader.find_by(username: "Helen")
-c.books << [Book.find_by(title: "The Well-Grounded Rubyist"), Book.find_by(title: "The Rails 4 Way")]
-c.save
+c.books << [m,o]
+r_c1 = c.reviews.find_by(book_id: m.id)
+r_c2 = c.reviews.find_by(book_id: o.id)
+r_c1.content = "solid!"
+r_c1.categories << [e,i]
+r_c1.save
+r_c2.content = "Great!"
+r_c2.categories << [e,i]
+r_c2.save
 
 d = Reader.find_by(username: "David")
 d.books << [Book.find_by(title: "The Well-Grounded Rubyist"), Book.find_by(title: "The Rails 4 Way"), Book.find_by(title: "Effective JavaScript" )]
-d.save
-
-e= Category.find_by(name: 'programming language')
-f= Category.find_by(name: 'computer science')
-g= Category.find_by(name: 'fiction')
-h= Category.find_by(name: 'non-fiction')
-i= Category.find_by(name: 'web development')
-j= Category.find_by(name: 'literature')
-k= Category.find_by(name: 'history')
-
-e.books <<[Book.find_by(title: "The Well-Grounded Rubyist"), Book.find_by(title: "The Rails 4 Way"), Book.find_by(title: "Effective JavaScript" )]
-f.books << [Book.find_by(title: "The Well-Grounded Rubyist"), Book.find_by(title: "The Rails 4 Way"), Book.find_by(title: "Effective JavaScript" )]
-g.books << Book.find_by(title: "War and Peace")
-h.books << [Book.find_by(title: "The Well-Grounded Rubyist"), Book.find_by(title: "The Rails 4 Way"), Book.find_by(title: "Effective JavaScript" ), Book.find_by(title: "History of World War II")]
-i.books << [Book.find_by(title: "The Well-Grounded Rubyist"), Book.find_by(title: "The Rails 4 Way"), Book.find_by(title: "Effective JavaScript" )]
-j.books << Book.find_by(title: "War and Peace")
-k.books << Book.find_by(title: "History of World War II")
-
-
-r1= Review.create(rating: 4,reader: a, book: Book.find_by(title: "War and Peace"), content:"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.")
-r2= Review.create(rating: 5,reader: a, book: Book.find_by(title: "History of World War II"), content:"Great!")
-r3= Review.create(rating: 9,reader: b, book: Book.find_by(title: "The Well-Grounded Rubyist"), content:"Master Piece")
-r4= Review.create(rating: 9,reader: c, book: Book.find_by(title: "The Rails 4 Way"), content:"Yeah!")
