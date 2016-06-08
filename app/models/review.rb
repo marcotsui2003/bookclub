@@ -1,7 +1,7 @@
 class Review < ActiveRecord::Base
 
-	belongs_to :book
-	belongs_to :reader
+	belongs_to :book, inverse_of: :reviews
+	belongs_to :reader, inverse_of: :reviews
 
 	has_many :review_categories
 	has_many :categories, through: :review_categories

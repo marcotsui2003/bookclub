@@ -32,19 +32,21 @@ class BooksController < ApplicationController
 			redirect "/books/#{existing_book.id}/edit"
 		else
 			@book = @reader.books.build(title: params[:title])
-			if @book.invalid?
+			if @book.invalid? #cannot use @book.save here ?
 				flash[:errors] = @book.errors.full_messages
 				redirect '/books/new'
 			else
 				@book.save
+				@review = @book.reviews.find_by(reader_id: @reader.id)
 				if !params[:category].blank?
 					params[:category].split(",").each do |c|
-				  	@book.categories.find_or_create_by(name: c)
+				  	@review.categories.find_or_create_by(name: c)
 				  end
 			  end
-				@reader.books << @book
 				if !params[:review].blank?
-					@review = Review.create(reader: @reader, book: @book, content: params[:review],rating: params[:rating].to_i)
+					@review.content = params[:review]
+					@review.rating = params[:rating].to_i
+					@review.save
 				end
 				redirect "/books/#{@book.id}"
 			end
