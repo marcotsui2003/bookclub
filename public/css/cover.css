@@ -355,3 +355,9 @@ form.boundary {
   position: relative;
   top: 125px;
 }
+
+td {
+  word-wrap: break-word;
+  min-width: 160px;
+  max-width: 230px;
+}
