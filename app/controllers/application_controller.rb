@@ -12,7 +12,7 @@ class ApplicationController < Sinatra::Base
   helpers do
     def redirect_if_not_logged_in
       if !logged_in?
-        flash[:errors] ="You need to log in to perform this function."
+        flash[:errors] = ["You need to log in to perform this function."]
         redirect "/login"
       end
     end
@@ -46,5 +46,5 @@ class ApplicationController < Sinatra::Base
     redirect_if_logged_in
   	erb :index
 	end
-  
+
 end

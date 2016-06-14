@@ -106,12 +106,14 @@ class BooksController < ApplicationController
 		@reader= current_reader
 		@book= Book.find(params[:id])
 		@review = Review.find_by(reader_id: @reader.id, book_id: @book.id)
+    #this can definitely moved to the model
 		if !params[:category].blank?
 		  @categories = params[:category].split(",").compact.map(&:strip)
 			@review.category_ids = @categories.map do |c|
 				@review.categories.find_or_create_by(name: c).id
 		  end
     end
+		#checked nested attributes....
 		if @reader.books.exists?(@book)
 			@review = Review.find_or_create_by(reader_id: @reader.id, book_id: @book.id)
 	    @review.update(content: params[:content], rating: params[:rating])

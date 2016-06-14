@@ -30,7 +30,7 @@
 
     <div class= 'registration'>
       <p class="lead">
-        <% if @reader.books.exists?(@book)%>
+        <% if @reader.books.exists?(@book)%> <!--put it in model? -->
         	<a href="/books/<%=@book.id%>/edit" class="btn btn-lg btn-primary">Review this book</a>
           <form id ="delete-form" method="post" action="/books/<%=@book.id%>/delete">
             <input id="hidden" type ="hidden" name="_method" value="delete">
