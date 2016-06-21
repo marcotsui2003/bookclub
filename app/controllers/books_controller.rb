@@ -5,18 +5,14 @@ class BooksController < ApplicationController
 	end
 
 	get '/books' do
-		@reader= Reader.find_by(id: session[:id])
-		@reader_books =@reader.books
+		@reader= current_reader
+		@reader_books = @reader.books
 		@other_books = @reader.books_read_by_others
 		erb :"/books/index"
 	end
 
 	get '/books/new' do
-		if !params[:title].blank?
-			@title= params[:title]
-		else
-			@title= nil
-		end
+		@title= params[:title]
 		erb :'/books/create'
 	end
 
@@ -52,37 +48,6 @@ class BooksController < ApplicationController
 			end
 		end
 	end
-
-
-
-=begin
-		if existing_book = Book.find_by(title: params[:title])
-				if @reader.books.exists?(existing_book)
-				flash[:notice] = "This book is already in your reading list"
-			else
-				flash[:notice] = "This book is being read by others"
-			end
-			redirect "/books/#{existing_book.id}/edit"
-		else
-			@book = @reader.books.build(title: params[:title])
-			if @book.save
-				flash[:errors] = book.errors.full_messages
-				redirect '/books/new'
-			else
-				if !params[:category].blank?
-					params[:category].split(",").each do |c|
-				  	@book.categories.create(name: c)
-				  end
-			  end
-				@reader.books << @book
-				if !params[:review].blank?
-					@review = Review.create(reader: @reader, book: @book, content: params[:review],rating: params[:rating].to_i)
-				end
-				redirect "/books/#{@book.id}"
-			end
-		end
-	end
-=end
 
 
 	get '/books/:id' do
