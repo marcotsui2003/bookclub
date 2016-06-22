@@ -9,14 +9,23 @@ class Book < ActiveRecord::Base
 	validates :title, {presence: true, uniqueness: true}
 
 
+  #cannot use self.title = title.strip.titlecase
+	def title=(title)
+	    super(title.strip.titlecase)
+			#self[:title] = title.strip
+	end
 
-	def self.valid_params?(params)
-    return !params[:title].empty?
+	#def categories
+	#	super.uniq
+	#end
+
+  def category_array
+  	categories.map(&:name).uniq
   end
 
-  def categories_list
-  	self.categories.map {|category| category.name}
-  end
+	def category_list
+		categories.category_names
+	end
 
 
 

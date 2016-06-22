@@ -38,8 +38,8 @@ j= Category.create(name: 'literature')
 k= Category.create(name: 'history')
 
 l= Book.create(title: 'War and Peace')
-m= Book.create(title: 'The Well-Grounded Rubyist')
-n= Book.create(title: 'Effective JavaScript')
+m= Book.create(title: 'The Well Grounded Rubyist')
+n= Book.create(title: 'Effective Javascript')
 o= Book.create(title: 'The Rails 4 Way')
 p= Book.create(title: 'History of World War II')
 
@@ -75,4 +75,4 @@ r_c2.categories << [e,i]
 r_c2.save
 
 d = Reader.find_by(username: "David")
-d.books << [Book.find_by(title: "The Well-Grounded Rubyist"), Book.find_by(title: "The Rails 4 Way"), Book.find_by(title: "Effective JavaScript" )]
+d.books << [Book.find_by(title: "The Well Grounded Rubyist"), Book.find_by(title: "The Rails 4 Way"), Book.find_by(title: "Effective Javascript" )]

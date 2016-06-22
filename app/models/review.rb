@@ -7,11 +7,11 @@ class Review < ActiveRecord::Base
 	has_many :categories, through: :review_categories
 
 	def content=(content)
-		if content.blank?
-			super(nil)
-		else
-			super(content)
-		end
+		content.blank? ? super(nil): super(content)
+	end
+
+	def category_list
+		categories.category_names
 	end
 
 

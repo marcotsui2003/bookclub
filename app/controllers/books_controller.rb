@@ -16,44 +16,42 @@ class BooksController < ApplicationController
 		erb :'/books/create'
 	end
 
-# can use some refactoring here?
 	post '/books' do
+		# check if the book is already in the reader's reading list
 		@reader= current_reader
-		if existing_book = Book.find_by(title: params[:title])
-			if @reader.books.exists?(existing_book)
-				flash[:notice] = "This book is already in your reading list"
-			else
-				flash[:notice] = "This book is being read by others"
-			end
+		if existing_book = @reader.books.find_by(title: params[:title].strip.titlecase)
+			flash[:notice] = "This book is already in your reading list"
 			redirect "/books/#{existing_book.id}/edit"
-		else
-			@book = @reader.books.build(title: params[:title])
-			if @book.invalid? #cannot use @book.save here ?
-				flash[:errors] = @book.errors.full_messages
-				redirect '/books/new'
-			else
-				@book.save
-				@review = @book.reviews.find_by(reader_id: @reader.id)
-				if !params[:category].blank?
-					params[:category].split(",").each do |c|
-				  	@review.categories.find_or_create_by(name: c)
-				  end
-			  end
-				if !params[:review].blank?
-					@review.content = params[:review]
-					@review.rating = params[:rating].to_i
-					@review.save
-				end
-				redirect "/books/#{@book.id}"
-			end
 		end
+
+		@book = Book.find_or_initialize_by(title: params[:title].strip.titlecase)
+		if @book.invalid? #cannot use @book.save here ?
+			flash[:errors] = @book.errors.full_messages
+			redirect '/books/new'
+		else
+			@book.save
+			@reader.books << @book
+			@review = @book.reviews.find_by(reader_id: @reader.id)
+			if !params[:category].blank?
+				params[:category].split(",").each do |c|
+			  	@review.categories.find_or_create_by(name: c)
+			  end
+		  end
+			if !params[:review].blank?
+				@review.content = params[:review]
+				@review.rating = params[:rating].to_i
+				@review.save
+			end
+			redirect "/books/#{@book.id}"
+		end
+
 	end
 
 
 	get '/books/:id' do
     @reader =current_reader
 		@book= Book.find(params[:id])
-		@categories= @book.categories_list
+		@categories= @book.category_array
 		erb :"/books/show"
 	end
 
@@ -61,9 +59,8 @@ class BooksController < ApplicationController
 		@reader= current_reader
 		@book= Book.find(params[:id])
 		@review = Review.find_or_create_by(reader_id: @reader.id, book_id: @book.id)
-		@reader_categories= @review.categories.map{|c| c.name}.join(",")
-		@all_categories=@book.categories.map{|c| c.name}.join(",")
-
+		@reader_categories= @review.category_list
+		@all_categories=@book.category_list
 		erb :"/books/edit"
 	end
 
@@ -75,7 +72,7 @@ class BooksController < ApplicationController
 		if !params[:category].blank?
 		  @categories = params[:category].split(",").compact.map(&:strip)
 			@review.category_ids = @categories.map do |c|
-				@review.categories.find_or_create_by(name: c).id
+				Category.find_or_create_by(name: c).id
 		  end
     end
 		#checked nested attributes....
