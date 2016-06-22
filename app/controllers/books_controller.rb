@@ -24,7 +24,7 @@ class BooksController < ApplicationController
 			redirect "/books/#{existing_book.id}/edit"
 		end
 
-		@book = Book.find_or_initialize_by(title: params[:title].strip.titlecase)
+		@book = Book.find_or_initialize_by(title: standardize_title(params[:title]))
 		if @book.invalid? #cannot use @book.save here ?
 			flash[:errors] = @book.errors.full_messages
 			redirect '/books/new'
