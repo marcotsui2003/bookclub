@@ -40,6 +40,10 @@ class ApplicationController < Sinatra::Base
     def reviewer_name(name)
       name == current_reader.username ? "You" : name
     end
+
+    def standardize_title(title)
+      title.strip.downcase.titlecase
+    end
   end
 
   get '/' do

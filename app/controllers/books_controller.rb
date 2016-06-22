@@ -19,7 +19,7 @@ class BooksController < ApplicationController
 	post '/books' do
 		# check if the book is already in the reader's reading list
 		@reader= current_reader
-		if existing_book = @reader.books.find_by(title: params[:title].strip.titlecase)
+		if existing_book = @reader.books.find_by(title: standardize_title(params[:title]))
 			flash[:notice] = "This book is already in your reading list"
 			redirect "/books/#{existing_book.id}/edit"
 		end

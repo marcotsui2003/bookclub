@@ -11,7 +11,7 @@ class Book < ActiveRecord::Base
 
   #cannot use self.title = title.strip.titlecase
 	def title=(title)
-	    super(title.strip.titlecase)
+	    super(standardize_title(title))
 			#self[:title] = title.strip
 	end
 
@@ -27,7 +27,10 @@ class Book < ActiveRecord::Base
 		categories.category_names
 	end
 
-
+  private
+	def standardize_title(title)
+		title.strip.downcase.titlecase
+	end	
 
 end
 
