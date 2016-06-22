@@ -58,7 +58,7 @@ class BooksController < ApplicationController
 		@reader= current_reader
 		@book= Book.find(params[:id])
 		@review = Review.find_or_create_by(reader_id: @reader.id, book_id: @book.id)
-		@review.update(content: params[:content], rating: params[:rating], content: params[:content])
+		@review.update(content: params[:content], rating: params[:rating], categories: params[:categories])
     # @reader.books << @book
     flash[:notice]= "Book successfully added/edited."
     redirect "/books/#{@book.id}"
