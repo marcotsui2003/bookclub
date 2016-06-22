@@ -14,6 +14,12 @@ class Review < ActiveRecord::Base
 		categories.category_names
 	end
 
+	def categories=(categories)
+			self.category_ids = categories.split(",").map do |c|
+				Category.find_or_create_by(name: c).id
+			end unless categories.blank?
+	end
+
 
 end
 

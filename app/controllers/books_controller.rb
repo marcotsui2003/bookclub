@@ -19,32 +19,22 @@ class BooksController < ApplicationController
 	post '/books' do
 		# check if the book is already in the reader's reading list
 		@reader= current_reader
-		if existing_book = @reader.books.find_by(title: standardize_title(params[:title]))
+		if existing_book = @reader.books.find_by(title: standardize_title(params[:title])) # There is a helper method and a model instance method
 			flash[:notice] = "This book is already in your reading list"
 			redirect "/books/#{existing_book.id}/edit"
 		end
 
 		@book = Book.find_or_initialize_by(title: standardize_title(params[:title]))
-		if @book.invalid? #cannot use @book.save here ?
+		if @book.invalid?
 			flash[:errors] = @book.errors.full_messages
 			redirect '/books/new'
 		else
 			@book.save
 			@reader.books << @book
 			@review = @book.reviews.find_by(reader_id: @reader.id)
-			if !params[:category].blank?
-				params[:category].split(",").each do |c|
-			  	@review.categories.find_or_create_by(name: c)
-			  end
-		  end
-			if !params[:review].blank?
-				@review.content = params[:review]
-				@review.rating = params[:rating].to_i
-				@review.save
-			end
+			@review.update(content: params[:content], rating: params[:rating], categories: params[:categories])
 			redirect "/books/#{@book.id}"
 		end
-
 	end
 
 
@@ -67,24 +57,10 @@ class BooksController < ApplicationController
 	patch '/books/:id' do
 		@reader= current_reader
 		@book= Book.find(params[:id])
-		@review = Review.find_by(reader_id: @reader.id, book_id: @book.id)
-    #this can definitely moved to the model
-		if !params[:category].blank?
-		  @categories = params[:category].split(",").compact.map(&:strip)
-			@review.category_ids = @categories.map do |c|
-				Category.find_or_create_by(name: c).id
-		  end
-    end
-		#checked nested attributes....
-		if @reader.books.exists?(@book)
-			@review = Review.find_or_create_by(reader_id: @reader.id, book_id: @book.id)
-	    @review.update(content: params[:content], rating: params[:rating])
-    else
-    	@reader.books << @book
-    	@review = Review.create(reader_id: @reader.id, book_id: @book.id)
-	    @review.update(content: params[:content], rating: params[:rating])
-    end
-    flash[:notice]= "Book successfully edited."
+		@review = Review.find_or_create_by(reader_id: @reader.id, book_id: @book.id)
+		@review.update(content: params[:content], rating: params[:rating], content: params[:content])
+    # @reader.books << @book
+    flash[:notice]= "Book successfully added/edited."
     redirect "/books/#{@book.id}"
 	end
 
@@ -96,11 +72,8 @@ class BooksController < ApplicationController
 			flash[:errors] =["#{@book.title} is not on your reading list"]
 		  redirect '/books'
 		else
-			# can I condense the code below?
 			@review.delete
-			#@reader.books.delete(@book)
 			@reader.save
-			#@book.save
 			@book.delete if @book.readers.blank?
 			redirect '/books'
 	  end
