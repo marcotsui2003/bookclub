@@ -24,13 +24,15 @@ class BooksController < ApplicationController
 			redirect "/books/#{existing_book.id}/edit"
 		end
 
-		@book = Book.find_or_initialize_by(title: standardize_title(params[:title]))
+		@book = @reader.books.find_or_initialize_by(title: standardize_title(params[:title]))
 		if @book.invalid?
 			flash[:errors] = @book.errors.full_messages
-			redirect '/books/new'
+			@categories = params[:categories]
+			@content =params[:content]
+			@rating = params[:rating]
+			erb :'/books/create'
 		else
 			@book.save
-			@reader.books << @book
 			@review = @book.reviews.find_by(reader_id: @reader.id)
 			@review.update(content: params[:content], rating: params[:rating], categories: params[:categories])
 			redirect "/books/#{@book.id}"

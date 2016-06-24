@@ -10,17 +10,17 @@
 
       <div class="form-group">
         <label for="categories" class="left-label">Categories<small>(e.g.Category A, Category B,Category C):</small></label>
-        <input id="categories" class="form-control" type="text" name="categories">
+        <input id="categories" class="form-control" type="text" name="categories" value= "<%= @categories %>">
       </div>
 
       <div class="form-group">
         <label for="review" class="left-label">Review:</label>
-        <textarea id="review" class="form-control" name="content"></textarea>
+        <textarea id="review" class="form-control" name="content"> <%= @content %></textarea>
       </div>
 
       <div class="form-group">
         <label for="rating" class="left-label">Rating:</label>
-        <input id="rating" class="form-control" type="number" min="0" max="10" step="1" name="rating"/>
+        <input id="rating" class="form-control" type="number" min="0" max="10" step="1" name="rating" value= "<%= @rating %>"/>
       </div>
 
       <input type="submit" class="btn btn-lg btn-primary" value="submit"/>

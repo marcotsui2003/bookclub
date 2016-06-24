@@ -15,6 +15,10 @@ class Reader < ActiveRecord::Base
   	Book.all.uniq - self.books.uniq
   end
 
+	def find_book_with_standardized_title(title)
+		books.find_by_standardized_title(title)
+	end
+
 end
 
 

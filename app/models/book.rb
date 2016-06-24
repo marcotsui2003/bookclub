@@ -15,8 +15,6 @@ class Book < ActiveRecord::Base
 			#self[:title] = title.strip
 	end
 
-	
-
   def category_array
   	categories.map(&:name).uniq
   end
@@ -29,7 +27,7 @@ class Book < ActiveRecord::Base
 	def standardize_title(title)
 		title.strip.downcase.titlecase
 	end
-
+	
 end
 
 =begin
